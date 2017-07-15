@@ -6,11 +6,12 @@ var output = function (_, Kotlin) {
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   function main(args) {
     println('Hello, World!');
+    println('This is kotlin script');
   }
   var package$com = _.com || (_.com = {});
   var package$park9eon = package$com.park9eon || (package$com.park9eon = {});
-  var package$newtab = package$park9eon.newtab || (package$park9eon.newtab = {});
-  package$newtab.main_kand9s$ = main;
+  var package$js = package$park9eon.js || (package$park9eon.js = {});
+  package$js.main_vqirvp$ = main;
   main([]);
   Kotlin.defineModule('output', _);
   return _;

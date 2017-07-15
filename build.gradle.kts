@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinJsOptions
+import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 
 buildscript {
     repositories {
@@ -22,23 +22,24 @@ dependencies {
 }
 
 tasks {
-    "doLast"(GradleBuild::class) {
-        configurations.compile.forEach {
-            copy {
-                includeEmptyDirs = false
-                from(zipTree(it.absolutePath))
-                into("$projectDir/web")
-                include {
-                    val path = it.path
-                            path.endsWith(".js") && (path.startsWith("META-INF/resources/") || !path.startsWith("META-INF/"))
+    withType<GradleBuild> {
+        doLast {
+            configurations.compile.forEach {
+                copy {
+                    includeEmptyDirs = false
+                    from(zipTree(it.absolutePath))
+                    into("$projectDir/web")
+                    include {
+                        val path = it.path
+                        path.endsWith(".js") && (path.startsWith("META-INF/resources/") || !path.startsWith("META-INF/"))
+                    }
                 }
             }
         }
     }
-    "compileKotlin2Js" {
-        val kotlinOptions = property("kotlinOptions") as KotlinJsOptions
-        kotlinOptions.outputFile = "$projectDir/web/output.js"
+    withType<Kotlin2JsCompile> {
+        kotlinOptions {
+            outputFile = "$projectDir/web/output.js"
+        }
     }
 }
-
-
